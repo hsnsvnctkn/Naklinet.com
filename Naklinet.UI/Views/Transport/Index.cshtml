@@ -1,0 +1,287 @@
+﻿@model Naklinet.Repository.Dto.GetOfferDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_LayoutTransport";
+}
+<style>
+    .myInputGroup {
+        background-color: #fff;
+        display: block;
+        margin: 10px 0;
+        position: relative;
+        font-size: 15px;
+    }
+
+        .myInputGroup label {
+            padding: 12px 30px;
+            width: 100%;
+            display: block;
+            text-align: left;
+            color: #3c454c;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+            transition: color 200ms ease-in;
+            overflow: hidden;
+            border: solid 2px #fff;
+        }
+
+            .myInputGroup label:hover {
+                background-color: #d6d9ff;
+            }
+
+            .myInputGroup label:before {
+                width: -webkit-fill-available;
+                height: 10px;
+                border-radius: 50%;
+                content: '';
+                background-color: #5562eb;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%) scale3d(1, 1, 1);
+                transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+                opacity: 0;
+                z-index: -1;
+            }
+
+            .myInputGroup label:after {
+                width: 32px;
+                height: 32px;
+                content: '';
+                border: 2px solid #00b2b2;
+                background-color: #fff;
+                background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
+                background-repeat: no-repeat;
+                background-position: 2px 3px;
+                border-radius: 50%;
+                z-index: 2;
+                position: absolute;
+                right: 30px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                transition: all 200ms ease-in;
+            }
+
+        .myInputGroup input:checked ~ label {
+            color: #fff;
+        }
+
+            .myInputGroup input:checked ~ label:before {
+                transform: translate(-50%, -50%) scale3d(20, 20, 1);
+                opacity: 1;
+            }
+
+            .myInputGroup input:checked ~ label:after {
+                background-color: #54e0c7;
+                border-color: #54e0c7;
+            }
+
+        .myInputGroup input {
+            width: 32px;
+            height: 32px;
+            order: 1;
+            z-index: 2;
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            visibility: hidden;
+        }
+</style>
+<div class="tuna-loader-container tuna-green">
+    <div class="tuna-loader"></div>
+</div>
+
+<div class='tuna-signup-container tuna-green'>
+    <div class='container'>
+        <div class="row">
+            <div class='tuna-signup-left col-md-4 col-sm-4'>
+                @*<img class='tuna-signup-logo' src='images/tuna-logo.png' alt="logo" />*@
+                <h2>Naklinet.com</h2>
+                <p>Nakliye için sizden bir kaç bilgi almamız gerekiyor..</p>
+                @*<p class="tuna-trial">14 Days Free Trial</p>*@
+                <hr />
+                <div class="tuna-slider-container">
+                    <ul class="tuna-slider">
+                        <li class='tuna-signup-testimonial'>
+                            @*<i class="icon-quote"></i>*@
+                            <i class="icon icon-quill"></i>
+                            <p>Eşyaların alınacağı eviniz kaç odalı ?</p>
+                            <img src='images/testimonials/logo1.png' alt="" />
+                            <b><span>‒ Naklinet</span></b>
+                        </li>
+                        <!--<li class='tuna-signup-testimonial'>-->
+                            @*<i class="icon-quote"></i>*@
+                            <!--<i class="icon icon-quill"></i>
+                            <p>We are using Tuna Signup Form, our customers love it and it's amazing :)</p>
+                            <img src='images/testimonials/logo1.png' alt="" />
+                            <b>John Masculer<span>‒ Customer Service Department</span></b>
+                        </li>-->
+                    </ul>
+                </div>
+            </div>
+            <div class='tuna-signup-right col-md-8 col-sm-8 '>
+
+                <div class='steps-count'>
+                    Ilerleme <span class="step-current">1</span>/<span class="step-count"></span>
+                </div>
+
+                <div class="tuna-steps">
+                    <div class="step step-active" data-step-id='1'>
+
+                        <div class="step-label">Eski eviniz kaç odalı ?</div>
+                        @foreach (var item in Model.roomCounts)
+                        {
+                            <div class="myInputGroup">
+                                <input id="from_@item.ID" value="@item.ID" name="from_room" type="radio" />
+                                <label for="from_@item.ID">@item.Count</label>
+                            </div>
+                        }
+                        <div class="myInputGroup">
+                            <input id="fromMoreRoomCount" value="fromMoreRoom" name="from_room" type="radio" />
+                            <label for="fromMoreRoomCount">Daha Büyük</label>
+                        </div>
+                        <div class='help-error'><i class="icon icon-warning"></i> Seçim yapmalısınız..</div>
+                    </div>
+
+                    <div class="step" data-step-id='2'>
+
+                        <div class="step-label">Yeni eviniz kaç odalı ?</div>
+                        @foreach (var item in Model.roomCounts)
+                        {
+                            <div class="myInputGroup">
+                                <input id="to_@item.ID" value="@item.ID" name="to_room" type="radio" />
+                                <label for="to_@item.ID">@item.Count</label>
+                            </div>
+                        }
+                        <div class="myInputGroup">
+                            <input id="toMoreRoomCount" value="toMoreRoom" name="to_room" type="radio" />
+                            <label for="toMoreRoomCount">Daha Büyük</label>
+                        </div>
+                        <div class='help-error'><i class="icon icon-warning"></i> Seçim yapmalısınız..</div>
+                    </div>
+
+
+                    <div class="step" data-step-id='3'>
+                        <div class="step-label"> What are your hobbies?</div>
+                        <label class="checkbox-inline"><input type="checkbox" value="READING" name="tn_hobbies[]"> Reading Books</label>
+                        <label class="checkbox-inline"><input type="checkbox" value="GUITAR" name="tn_hobbies[]"> Playing Guitar</label>
+                        <label class="checkbox-inline"><input type="checkbox" value="BICYCLE" name="tn_hobbies[]"> Riding Bicycle</label>
+                        <label class="checkbox-inline"><input type="checkbox" value="BOWLING" name="tn_hobbies[]"> Bowling</label>
+                        <div class='help-error'><i class="icon icon-warning"></i> You must select an option at least!</div>
+                    </div>
+                    <div class="step" data-step-id='4'>
+                        <div class="step-label">[Radios] What is your gender?</div>
+                        <label class="radio-inline"><input type="radio" value="MALE" name="tn_gender" checked> Male</label>
+                        <label class="radio-inline"><input type="radio" value="FEMALE" name="tn_gender"> Female</label>
+                        <div class='help-error'><i class="icon icon-warning"></i> You must select an option at least!</div>
+                    </div>
+                    @*<div class="step" data-step-id='4'>
+                        <div class="step-label">[Dropdown] Select your favorite sport?</div>
+                        <select id='tn_sport' name="tn_sport" class="selectpicker form-control">
+                            <option value="">Select an option</option>
+                            <option value="FOOTBALL">Football</option>
+                            <option value="BASKETBALL">Basketball</option>
+                            <option value="TENNIS">Tennis</option>
+                            <option value="RUGBY">Rugby</option>
+                            <option value="GOLF">Golf</option>
+                            <option value="SQUASH">Squash</option>
+                        </select>
+                        <div class='help-error'><i class="icon icon-warning"></i> You must select your favorite sport!</div>
+                    </div>*@
+                    <div class="step step-confirm" data-step-id='5'>
+                        <form action='post' name='signupForm' autocomplete="off" class="form-horizontal">
+                            <div class="form-group">
+                                <div class="control-label col-md-4">Name</div>
+                                <div class="col-md-8">
+                                    <div class="input-container">
+                                        <input type="text" name="name" autocomplete="off" spellcheck="false" class="form-control" />
+                                        <a href="javascript:void(0)" class="editInput">EDIT</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="control-label col-md-4">Oda Sayısı</div>
+                                <div class="col-md-8">
+                                    <div class="input-container">
+                                        <select name="roomCount" class="selectpicker form-control">
+                                            @foreach (var item in Model.roomCounts)
+                                            {
+                                                <option value="@item.ID">@item.Count</option>
+                                            }
+                                            <option value="fromMoreRoom">Daha Büyük</option>
+                                        </select>
+                                        <a href="javascript:void(0)" class="editInput">Düzenle</a>
+                                    </div>
+                                </div>
+                                @*<div class="col-md-8">
+                        <div class="input-container">
+                            <select name="hobbies[]" class="selectpicker form-control" multiple="multiple">
+                                <option value="READING">Reading Books</option>
+                                <option value="GUITAR">Playing Guitar</option>
+                                <option value="BOWLING">Bowling</option>
+                                <option value="BICYCLE">Riding Bicycle</option>
+                            </select>
+                            <a href="javascript:void(0)" class="editInput">EDIT</a>
+                        </div>
+                    </div>*@
+                            </div>
+                            <div class="form-group">
+                                <div class="control-label col-md-4">Gender</div>
+                                <div class="col-md-8">
+                                    <div class="input-container">
+                                        <select name="gender" class="selectpicker form-control">
+                                            <option value="MALE">Male</option>
+                                            <option value="FEMALE">Female</option>
+                                        </select>
+                                        <a href="javascript:void(0)" class="editInput">EDIT</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="control-label col-md-4">Favorite Sport</div>
+                                <div class="col-md-8">
+                                    <div class="input-container">
+                                        <select name="sport" class="selectpicker form-control">
+                                            <option value="FOOTBALL">Football</option>
+                                            <option value="BASKETBALL">Basketball</option>
+                                            <option value="TENNIS">Tennis</option>
+                                            <option value="RUGBY">Rugby</option>
+                                            <option value="GOLF">Golf</option>
+                                            <option value="SQUASH">Squash</option>
+                                        </select>
+                                        <a href="javascript:void(0)" class="editInput">EDIT</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-8 col-sm-12 col-md-offset-4 col-sm-offset-0">
+                                    <label class="checkbox-inline agreement">
+                                        <input id="agreement" name="agreement" type="checkbox" />I agree to the <a href="#" target="_blank">terms of service</a>.
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="step-confirm-buttons">
+                                <div>
+                                    <a href="javascript:void(0)" class="btn btn-white btn-rounded finishBtn">Ready, Let's Start!</a>
+                                    <span>or press "Enter"</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class='button-container'>
+                    <div>
+                        <a href="javascript:void(0)" class="btn btn-white btn-rounded nextStep" tabindex="0">Next Step →</a>
+                        <span>or press "Enter"</span>
+                    </div>
+                    <a href="javascript:void(0)" class='btn btn-white-transparent btn-rounded prevStep' tabindex="1">← Previous</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
