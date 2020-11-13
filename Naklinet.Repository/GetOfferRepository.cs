@@ -1,4 +1,5 @@
-﻿using Naklinet.Repository.Contracts;
+﻿using Naklinet.Domain.Entities;
+using Naklinet.Repository.Contracts;
 using Naklinet.Repository.Dto;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,14 @@ namespace Naklinet.Repository
                 ID = r.ID
             }).ToList();
 
-            return new GetOfferDto { roomCounts = roomCount };
+            var packagingOptions = _context.PackagingOptions.Select(po => new PackagingOptions
+            {
+                ID = po.ID,
+                OptionFactor = po.OptionFactor,
+                OptionName = po.OptionName
+            }).ToList();
+
+            return new GetOfferDto { roomCounts = roomCount, PackagingOptions = packagingOptions };
         }
     }
 }

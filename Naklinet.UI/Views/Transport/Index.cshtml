@@ -3,93 +3,86 @@
     ViewData["Title"] = "Index";
     Layout = "_LayoutTransport";
 }
+
+
 <style>
-    .myInputGroup {
-        background-color: #fff;
-        display: block;
-        margin: 10px 0;
+
+    .radiobtn {
         position: relative;
-        font-size: 15px;
+        display: block;
     }
 
-        .myInputGroup label {
-            padding: 12px 30px;
-            width: 100%;
+        .radiobtn label {
             display: block;
-            text-align: left;
-            color: #3c454c;
+            background: #FFFF;
+            color: #444;
+            border-radius: 5px;
+            padding: 10px 20px;
+            border: 2px solid #0259a8;
+            margin-bottom: 5px;
             cursor: pointer;
-            position: relative;
-            z-index: 2;
-            transition: color 200ms ease-in;
-            overflow: hidden;
-            border: solid 2px #fff;
+        }
+            /*            #0259a8
+    */
+            .radiobtn label:after, .radiobtn label:before {
+                content: "";
+                position: absolute;
+                right: 11px;
+                top: 11px;
+                width: 20px;
+                height: 20px;
+                border-radius: 3px;
+                background: #003c73;
+            }
+
+            .radiobtn label:before {
+                background: transparent;
+                transition: 0.1s width cubic-bezier(0.075, 0.82, 0.165, 1) 0s, 0.3s height cubic-bezier(0.075, 0.82, 0.165, 2) 0.1s;
+                z-index: 2;
+                overflow: hidden;
+                background-repeat: no-repeat;
+                background-size: 13px;
+                background-position: center;
+                width: 0;
+                height: 0;
+                background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNS4zIDEzLjIiPiAgPHBhdGggZmlsbD0iI2ZmZiIgZD0iTTE0LjcuOGwtLjQtLjRhMS43IDEuNyAwIDAgMC0yLjMuMUw1LjIgOC4yIDMgNi40YTEuNyAxLjcgMCAwIDAtMi4zLjFMLjQgN2ExLjcgMS43IDAgMCAwIC4xIDIuM2wzLjggMy41YTEuNyAxLjcgMCAwIDAgMi40LS4xTDE1IDMuMWExLjcgMS43IDAgMCAwLS4yLTIuM3oiIGRhdGEtbmFtZT0iUGZhZCA0Ii8+PC9zdmc+);
+            }
+
+        .radiobtn input[type="radio"] {
+            display: none;
+            position: absolute;
+            width: 100%;
+            appearance: none;
         }
 
-            .myInputGroup label:hover {
-                background-color: #d6d9ff;
+            .radiobtn input[type="radio"]:checked + label {
+                color: #FFF;
+                background: #0259a8;
+                animation-name: blink;
+                animation-duration: 1s;
+                border-color: #fff;
             }
 
-            .myInputGroup label:before {
-                width: -webkit-fill-available;
-                height: 10px;
-                border-radius: 50%;
-                content: '';
-                background-color: #5562eb;
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%) scale3d(1, 1, 1);
-                transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
-                opacity: 0;
-                z-index: -1;
-            }
+                .radiobtn input[type="radio"]:checked + label:after {
+                    background: #003c73;
+                }
 
-            .myInputGroup label:after {
-                width: 32px;
-                height: 32px;
-                content: '';
-                border: 2px solid #00b2b2;
-                background-color: #fff;
-                background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
-                background-repeat: no-repeat;
-                background-position: 2px 3px;
-                border-radius: 50%;
-                z-index: 2;
-                position: absolute;
-                right: 30px;
-                top: 50%;
-                transform: translateY(-50%);
-                cursor: pointer;
-                transition: all 200ms ease-in;
-            }
+                .radiobtn input[type="radio"]:checked + label:before {
+                    width: 20px;
+                    height: 20px;
+                }
 
-        .myInputGroup input:checked ~ label {
+    @@keyframes blink {
+        from {
+            background-color: #fff;
+            color: #000;
+        }
+
+        to {
+            background-color: #0259a8;
             color: #fff;
         }
-
-            .myInputGroup input:checked ~ label:before {
-                transform: translate(-50%, -50%) scale3d(20, 20, 1);
-                opacity: 1;
-            }
-
-            .myInputGroup input:checked ~ label:after {
-                background-color: #54e0c7;
-                border-color: #54e0c7;
-            }
-
-        .myInputGroup input {
-            width: 32px;
-            height: 32px;
-            order: 1;
-            z-index: 2;
-            position: absolute;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            visibility: hidden;
-        }
+    }
 </style>
 <div class="tuna-loader-container tuna-green">
     <div class="tuna-loader"></div>
@@ -107,19 +100,65 @@
                 <div class="tuna-slider-container">
                     <ul class="tuna-slider">
                         <li class='tuna-signup-testimonial'>
-                            @*<i class="icon-quote"></i>*@
                             <i class="icon icon-quill"></i>
-                            <p>Eşyaların alınacağı eviniz kaç odalı ?</p>
+                            <p id="step-info">Eski ve yeni eve adresinizi bilmemiz gerekiyor..</p>
                             <img src='images/testimonials/logo1.png' alt="" />
                             <b><span>‒ Naklinet</span></b>
                         </li>
-                        <!--<li class='tuna-signup-testimonial'>-->
-                            @*<i class="icon-quote"></i>*@
-                            <!--<i class="icon icon-quill"></i>
-                            <p>We are using Tuna Signup Form, our customers love it and it's amazing :)</p>
+                        <li class='tuna-signup-testimonial'>
+                            <i class="icon icon-quill"></i>
+                            <p id="step-info">Taşınacak olan eviniz kaç odalı olduğunu seçiniz..</p>
                             <img src='images/testimonials/logo1.png' alt="" />
-                            <b>John Masculer<span>‒ Customer Service Department</span></b>
-                        </li>-->
+                            <b><span>‒ Naklinet</span></b>
+                        </li>
+                        <li class='tuna-signup-testimonial'>
+                            <i class="icon icon-quill"></i>
+                            <p id="step-info">Eşyaları kolay taşıyabileceğimiz bir asansörünüz var mı?</p>
+                            <img src='images/testimonials/logo1.png' alt="" />
+                            <b><span>‒ Naklinet</span></b>
+                        </li>
+                        <li class='tuna-signup-testimonial'>
+                            <i class="icon icon-quill"></i>
+                            <p id="step-info">Eski evinizin kaçıncı katta olduğu bizim için önemli..</p>
+                            <img src='images/testimonials/logo1.png' alt="" />
+                            <b><span>‒ Naklinet</span></b>
+                        </li>
+                        <li class='tuna-signup-testimonial'>
+                            <i class="icon icon-quill"></i>
+                            <p id="step-info">Eşyaları kolay taşıyabileceğimiz bir asansörünüz var mı?</p>
+                            <img src='images/testimonials/logo1.png' alt="" />
+                            <b><span>‒ Naklinet</span></b>
+                        </li>
+                        <li class='tuna-signup-testimonial'>
+                            <i class="icon icon-quill"></i>
+                            <p id="step-info">Yeni evinizin kaçıncı katta olduğu bizim için önemli..</p>
+                            <img src='images/testimonials/logo1.png' alt="" />
+                            <b><span>‒ Naklinet</span></b>
+                        </li>
+                        <li class='tuna-signup-testimonial'>
+                            <i class="icon icon-quill"></i>
+                            <p id="step-info">Eşyalarınızın daha kolay taşınabilmesi için mobil asansör ister misiniz?</p>
+                            <img src='images/testimonials/logo1.png' alt="" />
+                            <b><span>‒ Naklinet</span></b>
+                        </li>
+                        <li class='tuna-signup-testimonial'>
+                            <i class="icon icon-quill"></i>
+                            <p id="step-info">Eşyalarınızı sizin için titizlikle paketleyebiliriz..</p>
+                            <img src='images/testimonials/logo1.png' alt="" />
+                            <b><span>‒ Naklinet</span></b>
+                        </li>
+                        <li class='tuna-signup-testimonial'>
+                            <i class="icon icon-quill"></i>
+                            <p id="step-info">Sökülen eşyalarınızı sizin için istediğiniz yerlerine montajını da yapabiliriz..</p>
+                            <img src='images/testimonials/logo1.png' alt="" />
+                            <b><span>‒ Naklinet</span></b>
+                        </li>
+                        <li class='tuna-signup-testimonial'>
+                            <i class="icon icon-quill"></i>
+                            <p id="step-info">Son olarak size fiyat çıkarabilmek için bilgilerinizi onaylamanız gerekiyor..</p>
+                            <img src='images/testimonials/logo1.png' alt="" />
+                            <b><span>‒ Naklinet</span></b>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -131,78 +170,149 @@
 
                 <div class="tuna-steps">
                     <div class="step step-active" data-step-id='1'>
+                        <div class="step-label">Nereden?</div>
+                        <div id="from_autocomp" style="margin-bottom:40px;">
+                            <select id="from_auto_complete" class="selectpicker form-control" data-width="100%" data-live-search="true" name="from_auto_complete">
+                            </select>
+                            <button id="asd" data-toggle="modal" data-target="#reservation"></button>
+                        </div>
+                        <div class="step-label">Nereye?</div>
+                        <div id="to_autocomp">
+                            <select id="to_auto_complete" class="selectpicker form-control" data-width="100%" data-live-search="true" name="to_auto_complete">
+                            </select>
+                        </div>
 
-                        <div class="step-label">Eski eviniz kaç odalı ?</div>
+                        <div class='help-error'><i class="icon icon-warning"></i> Adres seçimi yapmalısınız..</div>
+                    </div>
+                    <div class="step" data-step-id='2'>
+                        <div class="step-label">Eski eviniz kaç odalı?</div>
                         @foreach (var item in Model.roomCounts)
                         {
-                            <div class="myInputGroup">
+                            <div class="radiobtn">
                                 <input id="from_@item.ID" value="@item.ID" name="from_room" type="radio" />
                                 <label for="from_@item.ID">@item.Count</label>
                             </div>
                         }
-                        <div class="myInputGroup">
+                        <div class="radiobtn">
                             <input id="fromMoreRoomCount" value="fromMoreRoom" name="from_room" type="radio" />
                             <label for="fromMoreRoomCount">Daha Büyük</label>
                         </div>
                         <div class='help-error'><i class="icon icon-warning"></i> Seçim yapmalısınız..</div>
                     </div>
+                    <div class="step" data-step-id='3'>
+                        <div class="step-label">Eski evinizde asansör var mı?</div>
+                        <div class="radiobtn">
+                            <input id="fromElevatorTrue" value="true" name="from_elevator" type="radio" />
+                            <label for="fromElevatorTrue">Asansör Var</label>
+                        </div>
+                        <div class="radiobtn">
+                            <input id="fromElevatorFalse" value="false" name="from_elevator" type="radio" />
+                            <label for="fromElevatorFalse">Asansör Yok</label>
+                        </div>
+                        <div class='help-error'><i class="icon icon-warning"></i> Seçim yapmalısınız..</div>
+                    </div>
 
-                    <div class="step" data-step-id='2'>
-
-                        <div class="step-label">Yeni eviniz kaç odalı ?</div>
-                        @foreach (var item in Model.roomCounts)
+                    <div class="step" data-step-id='4'>
+                        <div class="step-label">Eski evinizde kaçıncı katta bulunuyor?</div>
+                        <div class="radiobtn">
+                            <input id="fromZeroFloor" value="0" name="from_floor" type="radio" />
+                            <label for="fromZeroFloor">Giriş Kat</label>
+                        </div>
+                        @for (int i = 1; i <= 10; i++)
                         {
-                            <div class="myInputGroup">
-                                <input id="to_@item.ID" value="@item.ID" name="to_room" type="radio" />
-                                <label for="to_@item.ID">@item.Count</label>
+                            <div class="radiobtn">
+                                <input id="fromFloor_@i" value="@i" name="from_floor" type="radio" />
+                                <label for="fromFloor_@i">@i</label>
                             </div>
                         }
-                        <div class="myInputGroup">
-                            <input id="toMoreRoomCount" value="toMoreRoom" name="to_room" type="radio" />
-                            <label for="toMoreRoomCount">Daha Büyük</label>
+                        <div class="radiobtn">
+                            <input id="fromMoreFloor" value="fromMoreFloor" name="from_floor" type="radio" />
+                            <label for="fromMoreFloor">Daha Fazla</label>
+                        </div>
+                        <div class='help-error'><i class="icon icon-warning"></i> Seçim yapmalısınız..</div>
+                    </div>
+                    <div class="step" data-step-id='5'>
+                        <div class="step-label">Yeni evinizde asansör var mı?</div>
+                        <div class="radiobtn">
+                            <input id="toElevatorTrue" value="true" name="to_elevator" type="radio" />
+                            <label for="toElevatorTrue">Asansör Var</label>
+                        </div>
+                        <div class="radiobtn">
+                            <input id="toElevatorFalse" value="false" name="to_elevator" type="radio" />
+                            <label for="toElevatorFalse">Asansör Yok</label>
+                        </div>
+                        <div class='help-error'><i class="icon icon-warning"></i> Seçim yapmalısınız..</div>
+                    </div>
+
+                    <div class="step" data-step-id='6'>
+                        <div class="step-label">Yeni evinizde kaçıncı katta bulunuyor?</div>
+                        <div class="radiobtn">
+                            <input id="toZeroFloor" value="0" name="to_floor" type="radio" />
+                            <label for="toZeroFloor">Giriş Kat</label>
+                        </div>
+                        @for (int i = 1; i <= 10; i++)
+                        {
+                            <div class="radiobtn">
+                                <input id="toFloor_@i" value="@i" name="to_floor" type="radio" />
+                                <label for="toFloor_@i">@i</label>
+                            </div>
+                        }
+                        <div class="radiobtn">
+                            <input id="toMoreFloor" value="toMoreFloor" name="to_floor" type="radio" />
+                            <label for="toMoreFloor">Daha Fazla</label>
+                        </div>
+                        <div class='help-error'><i class="icon icon-warning"></i> Seçim yapmalısınız..</div>
+                    </div>
+
+                    <div class="step" data-step-id='7'>
+                        <div class="step-label">Mobil asansör ister misiniz?</div>
+                        <div class="radiobtn">
+                            <input id="fromMobileLift" value="from" name="mobile_lift" type="radio" />
+                            <label for="fromMobileLift">Sadece Eski Evimde İstiyorum</label>
+                        </div>
+                        <div class="radiobtn">
+                            <input id="toMobileLift" value="to" name="mobile_lift" type="radio" />
+                            <label for="toMobileLift">Sadece Yeni Evimde İstiyorum</label>
+                        </div>
+                        <div class="radiobtn">
+                            <input id="bothMobileLift" value="both" name="mobile_lift" type="radio" />
+                            <label for="bothMobileLift">Her İki Evimde İstiyorum</label>
+                        </div>
+                        <div class="radiobtn">
+                            <input id="noMobileLift" value="no" name="mobile_lift" type="radio" />
+                            <label for="noMobileLift">Mobil Asansör İstemiyorum</label>
+                        </div>
+                        <div class='help-error'><i class="icon icon-warning"></i> Seçim yapmalısınız..</div>
+                    </div>
+
+                    <div class="step" data-step-id='8'>
+                        <div class="step-label">Paketleme ister misiniz?</div>
+                        @foreach (var item in Model.PackagingOptions)
+                        {
+                            <div class="radiobtn">
+                                <input id="packOp_@item.ID" value="@item.ID" name="packaging_options" type="radio" />
+                                <label for="packOp_@item.ID">@item.OptionName</label>
+                            </div>
+                        }
+                        <div class='help-error'><i class="icon icon-warning"></i> Seçim yapmalısınız..</div>
+                    </div>
+
+                    <div class="step" data-step-id='9'>
+                        <div class="step-label">Yeni evinizde montaj yapalım mı?</div>
+                        <div class="radiobtn">
+                            <input id="montageTrue" value="true" name="chose_montage" type="radio" />
+                            <label for="montageTrue">Montaj İstiyorum</label>
+                        </div>
+                        <div class="radiobtn">
+                            <input id="montageFalse" value="false" name="chose_montage" type="radio" />
+                            <label for="montageFalse">Montaj İstemiyorum</label>
                         </div>
                         <div class='help-error'><i class="icon icon-warning"></i> Seçim yapmalısınız..</div>
                     </div>
 
 
-                    <div class="step" data-step-id='3'>
-                        <div class="step-label"> What are your hobbies?</div>
-                        <label class="checkbox-inline"><input type="checkbox" value="READING" name="tn_hobbies[]"> Reading Books</label>
-                        <label class="checkbox-inline"><input type="checkbox" value="GUITAR" name="tn_hobbies[]"> Playing Guitar</label>
-                        <label class="checkbox-inline"><input type="checkbox" value="BICYCLE" name="tn_hobbies[]"> Riding Bicycle</label>
-                        <label class="checkbox-inline"><input type="checkbox" value="BOWLING" name="tn_hobbies[]"> Bowling</label>
-                        <div class='help-error'><i class="icon icon-warning"></i> You must select an option at least!</div>
-                    </div>
-                    <div class="step" data-step-id='4'>
-                        <div class="step-label">[Radios] What is your gender?</div>
-                        <label class="radio-inline"><input type="radio" value="MALE" name="tn_gender" checked> Male</label>
-                        <label class="radio-inline"><input type="radio" value="FEMALE" name="tn_gender"> Female</label>
-                        <div class='help-error'><i class="icon icon-warning"></i> You must select an option at least!</div>
-                    </div>
-                    @*<div class="step" data-step-id='4'>
-                        <div class="step-label">[Dropdown] Select your favorite sport?</div>
-                        <select id='tn_sport' name="tn_sport" class="selectpicker form-control">
-                            <option value="">Select an option</option>
-                            <option value="FOOTBALL">Football</option>
-                            <option value="BASKETBALL">Basketball</option>
-                            <option value="TENNIS">Tennis</option>
-                            <option value="RUGBY">Rugby</option>
-                            <option value="GOLF">Golf</option>
-                            <option value="SQUASH">Squash</option>
-                        </select>
-                        <div class='help-error'><i class="icon icon-warning"></i> You must select your favorite sport!</div>
-                    </div>*@
-                    <div class="step step-confirm" data-step-id='5'>
+                    <div class="step step-confirm" data-step-id='10'>
                         <form action='post' name='signupForm' autocomplete="off" class="form-horizontal">
-                            <div class="form-group">
-                                <div class="control-label col-md-4">Name</div>
-                                <div class="col-md-8">
-                                    <div class="input-container">
-                                        <input type="text" name="name" autocomplete="off" spellcheck="false" class="form-control" />
-                                        <a href="javascript:void(0)" class="editInput">EDIT</a>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <div class="control-label col-md-4">Oda Sayısı</div>
                                 <div class="col-md-8">
@@ -217,58 +327,122 @@
                                         <a href="javascript:void(0)" class="editInput">Düzenle</a>
                                     </div>
                                 </div>
-                                @*<div class="col-md-8">
-                        <div class="input-container">
-                            <select name="hobbies[]" class="selectpicker form-control" multiple="multiple">
-                                <option value="READING">Reading Books</option>
-                                <option value="GUITAR">Playing Guitar</option>
-                                <option value="BOWLING">Bowling</option>
-                                <option value="BICYCLE">Riding Bicycle</option>
-                            </select>
-                            <a href="javascript:void(0)" class="editInput">EDIT</a>
-                        </div>
-                    </div>*@
                             </div>
                             <div class="form-group">
-                                <div class="control-label col-md-4">Gender</div>
+                                <div class="control-label col-md-4">Eski Evde Asansör</div>
                                 <div class="col-md-8">
                                     <div class="input-container">
-                                        <select name="gender" class="selectpicker form-control">
-                                            <option value="MALE">Male</option>
-                                            <option value="FEMALE">Female</option>
+                                        <select name="fromElevator" class="selectpicker form-control">
+                                            <option value="true">Asansör Var</option>
+                                            <option value="false">Asansör Yok</option>
                                         </select>
-                                        <a href="javascript:void(0)" class="editInput">EDIT</a>
+                                        <a href="javascript:void(0)" class="editInput">Düzenle</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="control-label col-md-4">Favorite Sport</div>
+                                <div class="control-label col-md-4">Eski Evde Kat</div>
                                 <div class="col-md-8">
                                     <div class="input-container">
-                                        <select name="sport" class="selectpicker form-control">
-                                            <option value="FOOTBALL">Football</option>
-                                            <option value="BASKETBALL">Basketball</option>
-                                            <option value="TENNIS">Tennis</option>
-                                            <option value="RUGBY">Rugby</option>
-                                            <option value="GOLF">Golf</option>
-                                            <option value="SQUASH">Squash</option>
+                                        <select name="fromFloor" class="selectpicker form-control">
+                                            <option value="0">Giriş Kat</option>
+                                            @for (int i = 1; i <= 10; i++)
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                            <option value="fromMoreFloor">Daha Fazla</option>
                                         </select>
-                                        <a href="javascript:void(0)" class="editInput">EDIT</a>
+                                        <a href="javascript:void(0)" class="editInput">Düzenle</a>
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="control-label col-md-4">Yeni Evde Asansör</div>
+                                <div class="col-md-8">
+                                    <div class="input-container">
+                                        <select name="toElevator" class="selectpicker form-control">
+                                            <option value="true">Asansör Var</option>
+                                            <option value="false">Asansör Yok</option>
+                                        </select>
+                                        <a href="javascript:void(0)" class="editInput">Düzenle</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="control-label col-md-4">Yeni Evde Kat</div>
+                                <div class="col-md-8">
+                                    <div class="input-container">
+                                        <select name="toFloor" class="selectpicker form-control">
+                                            <option value="0">Giriş Kat</option>
+                                            @for (int i = 1; i <= 10; i++)
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                            <option value="toMoreFloor">Daha Fazla</option>
+                                        </select>
+                                        <a href="javascript:void(0)" class="editInput">Düzenle</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="control-label col-md-4">Mobil Asansör</div>
+                                <div class="col-md-8">
+                                    <div class="input-container">
+                                        <select name="mobileLift" class="selectpicker form-control">
+                                            <option value="from">Sadece Eski Evde</option>
+                                            <option value="to">Sadece Yeni Evde</option>
+                                            <option value="both">Her İki Evde</option>
+                                            <option value="no">Mobil Asansör Yok</option>
+                                        </select>
+                                        <a href="javascript:void(0)" class="editInput">Düzenle</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="control-label col-md-4">Oda Sayısı</div>
+                                <div class="col-md-8">
+                                    <div class="input-container">
+                                        <select name="packagingOptions" class="selectpicker form-control">
+                                            @foreach (var item in Model.PackagingOptions)
+                                            {
+                                                <option value="@item.ID">@item.OptionName</option>
+                                            }
+                                        </select>
+                                        <a href="javascript:void(0)" class="editInput">Düzenle</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="control-label col-md-4">Montaj</div>
+                                <div class="col-md-8">
+                                    <div class="input-container">
+                                        <select name="montage" class="selectpicker form-control">
+                                            <option value="true">Montaj İstiyorum</option>
+                                            <option value="false">Montaj İstemiyorum</option>
+                                        </select>
+                                        <a href="javascript:void(0)" class="editInput">Düzenle</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="form-group">
                                 <div class="col-md-8 col-sm-12 col-md-offset-4 col-sm-offset-0">
                                     <label class="checkbox-inline agreement">
-                                        <input id="agreement" name="agreement" type="checkbox" />I agree to the <a href="#" target="_blank">terms of service</a>.
+                                        <input id="agreement" name="agreement" type="checkbox" /><a href="#" target="_blank">Sözleşme metnini</a> kabul ediyorum.
                                     </label>
                                 </div>
                             </div>
 
                             <div class="step-confirm-buttons">
                                 <div>
-                                    <a href="javascript:void(0)" class="btn btn-white btn-rounded finishBtn">Ready, Let's Start!</a>
-                                    <span>or press "Enter"</span>
+                                    <a href="javascript:void(0)" id="getPrice" class="btn btn-white btn-rounded finishBtn">Fiyat Al</a>
+                                    <span>veya tıkla "Enter"</span>
                                 </div>
                             </div>
                         </form>
@@ -276,12 +450,98 @@
                 </div>
                 <div class='button-container'>
                     <div>
-                        <a href="javascript:void(0)" class="btn btn-white btn-rounded nextStep" tabindex="0">Next Step →</a>
-                        <span>or press "Enter"</span>
+                        <a href="javascript:void(0)" class="btn btn-white btn-rounded nextStep" tabindex="0">Sonraki Adım →</a>
+                        <span>veya tikla "Enter"</span>
                     </div>
-                    <a href="javascript:void(0)" class='btn btn-white-transparent btn-rounded prevStep' tabindex="1">← Previous</a>
+                    <a href="javascript:void(0)" class='btn btn-white-transparent btn-rounded prevStep' tabindex="1">← Önceki Adım</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!--MODAL-->
+<div class="modal fade" id="reservation" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).on('keyup', '#from_autocomp .bs-searchbox input', function (e) {
+            var key = $(this).val();
+            if (e.keyCode == 13) {
+
+                $("#from_auto_complete option").remove();
+                $.ajax({
+                    url: '@Url.Action("AutoCompleteAddress","Transport")',
+                    type: 'post',
+                    contentType: 'application/x-www-form-urlencoded',
+                    data: { valueKey: key },
+                    success: function (result) {
+                        if (result.districts != 'null') {
+                            $.each(result.districts, function (key, value) {
+                                $("#from_auto_complete")
+                                    .append($("<option>", {
+                                        value: value.geoObject.metaDataProperty.geocoderMetaData.text,
+                                        text: value.geoObject.metaDataProperty.geocoderMetaData.text
+                                    }))
+                                    .selectpicker('refresh');
+                            });
+                        }
+                    }
+                });
+                $('.selectpicker').selectpicker('refresh');
+            }
+        });
+        $(document).on('keyup', '#to_autocomp .bs-searchbox input', function (e) {
+            var key = $(this).val();
+            if (e.keyCode == 13) {
+
+                $("#to_auto_complete option").remove();
+                $.ajax({
+                    url: '@Url.Action("AutoCompleteAddress","Transport")',
+                    type: 'post',
+                    contentType: 'application/x-www-form-urlencoded',
+                    data: { valueKey: key },
+                    success: function (result) {
+                        if (result.districts != 'null') {
+                            $.each(result.districts, function (key, value) {
+                                $("#to_auto_complete")
+                                    .append($("<option>", {
+                                        value: value.geoObject.metaDataProperty.geocoderMetaData.text,
+                                        text: value.geoObject.metaDataProperty.geocoderMetaData.text
+                                    }))
+                                    .selectpicker('refresh');
+                            });
+                        }
+                    }
+                });
+                $('.selectpicker').selectpicker('refresh');
+            }
+        });
+        $('.selectpicker').selectpicker({
+            noneSelectedText: 'Seçim Yapılmadı',
+            liveSearchPlaceholder: 'Enter tuşuna basarak arama yapınız..',
+            noneResultsText: 'Hiç bir eşleşme yok',
+        });
+        $("#asd").click(function () {
+            //$('#step-info').text('Evinizin büyüklüğü bizim için önemli');
+        });
+
+    </script>
+}

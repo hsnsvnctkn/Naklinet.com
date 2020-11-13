@@ -26,12 +26,10 @@ namespace Naklinet.UI.Controllers
         {
             return View();
         }
-        public ActionResult Edit(int id)
+        public IActionResult GetAddress()
         {
-            var shipper = _testRepository.GetShipper(id);
-            return View(shipper);
+            return View();
         }
-
         // POST: HomeController1/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
