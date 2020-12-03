@@ -1,11 +1,67 @@
 ﻿@model Naklinet.Repository.Dto.GetOfferDto
+@using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "Index";
     Layout = "_LayoutTransport";
+
+    var cusPhone = Context.Session.GetString("SessionCustomerPhone");
 }
 
 
 <style>
+    .get-offer-div {
+        border-color: #2196F3 !important;
+        color: #000 !important;
+        background-color: #ddffff !important;
+        border-left: 6px solid !important;
+        padding: 10px;
+    }
+
+        .get-offer-div span {
+            font-size: larger;
+            font-weight: 600;
+        }
+
+    .form-control row {
+        margin-bottom: 0;
+        padding: 12px 0;
+    }
+
+    .modal-body label {
+        font-family: 'Open Sans', arial, helvetica, sans-serif;
+        font-weight: 600;
+    }
+
+    .col-form-label {
+        padding-top: calc(.375rem + 1px);
+        padding-bottom: calc(.375rem + 1px);
+        margin-bottom: 0;
+        font-size: inherit;
+        line-height: 1.5;
+    }
+
+    .text-sm-right {
+        text-align: right !important;
+    }
+
+    .modal {
+        text-align: center;
+    }
+
+    @@media screen and (min-width: 768px) {
+        .modal:before {
+            display: inline-block;
+            vertical-align: middle;
+            content: " ";
+            height: 100%;
+        }
+    }
+
+    .modal-dialog {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+    }
 
     .radiobtn {
         position: relative;
@@ -83,6 +139,53 @@
             color: #fff;
         }
     }
+
+    .icon-container {
+        position: absolute;
+        right: 10px;
+        top: calc(50% - 15px);
+        display: none;
+    }
+
+    .loader {
+        position: relative;
+        height: 20px;
+        width: 20px;
+        display: inline-block;
+        animation: around 5.4s infinite;
+    }
+
+    @@keyframes around {
+        0% {
+            transform: rotate(0deg)
+        }
+
+        100% {
+            transform: rotate(360deg)
+        }
+    }
+
+    .loader::after, .loader::before {
+        content: "";
+        background: white;
+        position: absolute;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        border-width: 2px;
+        border-color: #333 #333 transparent transparent;
+        border-style: solid;
+        border-radius: 20px;
+        box-sizing: border-box;
+        top: 0;
+        left: 0;
+        animation: around 0.7s ease-in-out infinite;
+    }
+
+    .loader::after {
+        animation: around 0.7s ease-in-out 0.1s infinite;
+        background: transparent;
+    }
 </style>
 <div class="tuna-loader-container tuna-green">
     <div class="tuna-loader"></div>
@@ -99,66 +202,15 @@
                 <hr />
                 <div class="tuna-slider-container">
                     <ul class="tuna-slider">
-                        <li class='tuna-signup-testimonial'>
-                            <i class="icon icon-quill"></i>
-                            <p id="step-info">Eski ve yeni eve adresinizi bilmemiz gerekiyor..</p>
-                            <img src='images/testimonials/logo1.png' alt="" />
-                            <b><span>‒ Naklinet</span></b>
-                        </li>
-                        <li class='tuna-signup-testimonial'>
-                            <i class="icon icon-quill"></i>
-                            <p id="step-info">Taşınacak olan eviniz kaç odalı olduğunu seçiniz..</p>
-                            <img src='images/testimonials/logo1.png' alt="" />
-                            <b><span>‒ Naklinet</span></b>
-                        </li>
-                        <li class='tuna-signup-testimonial'>
-                            <i class="icon icon-quill"></i>
-                            <p id="step-info">Eşyaları kolay taşıyabileceğimiz bir asansörünüz var mı?</p>
-                            <img src='images/testimonials/logo1.png' alt="" />
-                            <b><span>‒ Naklinet</span></b>
-                        </li>
-                        <li class='tuna-signup-testimonial'>
-                            <i class="icon icon-quill"></i>
-                            <p id="step-info">Eski evinizin kaçıncı katta olduğu bizim için önemli..</p>
-                            <img src='images/testimonials/logo1.png' alt="" />
-                            <b><span>‒ Naklinet</span></b>
-                        </li>
-                        <li class='tuna-signup-testimonial'>
-                            <i class="icon icon-quill"></i>
-                            <p id="step-info">Eşyaları kolay taşıyabileceğimiz bir asansörünüz var mı?</p>
-                            <img src='images/testimonials/logo1.png' alt="" />
-                            <b><span>‒ Naklinet</span></b>
-                        </li>
-                        <li class='tuna-signup-testimonial'>
-                            <i class="icon icon-quill"></i>
-                            <p id="step-info">Yeni evinizin kaçıncı katta olduğu bizim için önemli..</p>
-                            <img src='images/testimonials/logo1.png' alt="" />
-                            <b><span>‒ Naklinet</span></b>
-                        </li>
-                        <li class='tuna-signup-testimonial'>
-                            <i class="icon icon-quill"></i>
-                            <p id="step-info">Eşyalarınızın daha kolay taşınabilmesi için mobil asansör ister misiniz?</p>
-                            <img src='images/testimonials/logo1.png' alt="" />
-                            <b><span>‒ Naklinet</span></b>
-                        </li>
-                        <li class='tuna-signup-testimonial'>
-                            <i class="icon icon-quill"></i>
-                            <p id="step-info">Eşyalarınızı sizin için titizlikle paketleyebiliriz..</p>
-                            <img src='images/testimonials/logo1.png' alt="" />
-                            <b><span>‒ Naklinet</span></b>
-                        </li>
-                        <li class='tuna-signup-testimonial'>
-                            <i class="icon icon-quill"></i>
-                            <p id="step-info">Sökülen eşyalarınızı sizin için istediğiniz yerlerine montajını da yapabiliriz..</p>
-                            <img src='images/testimonials/logo1.png' alt="" />
-                            <b><span>‒ Naklinet</span></b>
-                        </li>
-                        <li class='tuna-signup-testimonial'>
-                            <i class="icon icon-quill"></i>
-                            <p id="step-info">Son olarak size fiyat çıkarabilmek için bilgilerinizi onaylamanız gerekiyor..</p>
-                            <img src='images/testimonials/logo1.png' alt="" />
-                            <b><span>‒ Naklinet</span></b>
-                        </li>
+                        @foreach (var item in Model.StepExplanations)
+                        {
+                            <li class='tuna-signup-testimonial'>
+                                <i class="icon icon-quill"></i>
+                                <p id="step-info">@item.Explanation</p>
+                                <img src='images/testimonials/logo1.png' alt="" />
+                                <b><span>‒ Naklinet</span></b>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -171,15 +223,19 @@
                 <div class="tuna-steps">
                     <div class="step step-active" data-step-id='1'>
                         <div class="step-label">Nereden?</div>
-                        <div id="from_autocomp" style="margin-bottom:40px;">
-                            <select id="from_auto_complete" class="selectpicker form-control" data-width="100%" data-live-search="true" name="from_auto_complete">
-                            </select>
+                        <div id="from_autocomp" style="margin-bottom:40px; position:relative;">
+                            <select id="from_auto_complete" class="selectpicker form-control loading" data-width="100%" data-live-search="true" name="from_auto_complete"></select>
+                            <div class="icon-container" id="from_loading">
+                                <i class="loader"></i>
+                            </div>
                             <button id="asd" data-toggle="modal" data-target="#reservation"></button>
                         </div>
                         <div class="step-label">Nereye?</div>
-                        <div id="to_autocomp">
-                            <select id="to_auto_complete" class="selectpicker form-control" data-width="100%" data-live-search="true" name="to_auto_complete">
-                            </select>
+                        <div id="to_autocomp" style="position:relative;">
+                            <select id="to_auto_complete" class="selectpicker form-control" data-width="100%" data-live-search="true" name="to_auto_complete"></select>
+                            <div class="icon-container" id="to_loading">
+                                <i class="loader"></i>
+                            </div>
                         </div>
 
                         <div class='help-error'><i class="icon icon-warning"></i> Adres seçimi yapmalısınız..</div>
@@ -266,22 +322,13 @@
 
                     <div class="step" data-step-id='7'>
                         <div class="step-label">Mobil asansör ister misiniz?</div>
-                        <div class="radiobtn">
-                            <input id="fromMobileLift" value="from" name="mobile_lift" type="radio" />
-                            <label for="fromMobileLift">Sadece Eski Evimde İstiyorum</label>
-                        </div>
-                        <div class="radiobtn">
-                            <input id="toMobileLift" value="to" name="mobile_lift" type="radio" />
-                            <label for="toMobileLift">Sadece Yeni Evimde İstiyorum</label>
-                        </div>
-                        <div class="radiobtn">
-                            <input id="bothMobileLift" value="both" name="mobile_lift" type="radio" />
-                            <label for="bothMobileLift">Her İki Evimde İstiyorum</label>
-                        </div>
-                        <div class="radiobtn">
-                            <input id="noMobileLift" value="no" name="mobile_lift" type="radio" />
-                            <label for="noMobileLift">Mobil Asansör İstemiyorum</label>
-                        </div>
+                        @foreach (var item in Model.mobileElevator)
+                        {
+                            <div class="radiobtn">
+                                <input id="fromMobileLift_@item.ID" value="@item.ID" name="mobile_lift" type="radio" />
+                                <label for="fromMobileLift_@item.ID">@item.OpitonText</label>
+                            </div>
+                        }
                         <div class='help-error'><i class="icon icon-warning"></i> Seçim yapmalısınız..</div>
                     </div>
 
@@ -312,7 +359,12 @@
 
 
                     <div class="step step-confirm" data-step-id='10'>
-                        <form action='post' name='signupForm' autocomplete="off" class="form-horizontal">
+                        <form action='post' id='getOfferForm' autocomplete="off" class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-md-5 text-center" id="fromAddress"></label>
+                                <label class="control-label col-md-2 text-center">→</label>
+                                <label class="control-label col-md-5 text-center" id="toAddress"></label>
+                            </div>
                             <div class="form-group">
                                 <div class="control-label col-md-4">Oda Sayısı</div>
                                 <div class="col-md-8">
@@ -391,10 +443,10 @@
                                 <div class="col-md-8">
                                     <div class="input-container">
                                         <select name="mobileLift" class="selectpicker form-control">
-                                            <option value="from">Sadece Eski Evde</option>
-                                            <option value="to">Sadece Yeni Evde</option>
-                                            <option value="both">Her İki Evde</option>
-                                            <option value="no">Mobil Asansör Yok</option>
+                                            @foreach (var item in Model.mobileElevator)
+                                            {
+                                                <option value="@item.ID">@item.OpitonText</option>
+                                            }
                                         </select>
                                         <a href="javascript:void(0)" class="editInput">Düzenle</a>
                                     </div>
@@ -402,7 +454,7 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="control-label col-md-4">Oda Sayısı</div>
+                                <div class="control-label col-md-4">Paketleme</div>
                                 <div class="col-md-8">
                                     <div class="input-container">
                                         <select name="packagingOptions" class="selectpicker form-control">
@@ -434,7 +486,7 @@
                             <div class="form-group">
                                 <div class="col-md-8 col-sm-12 col-md-offset-4 col-sm-offset-0">
                                     <label class="checkbox-inline agreement">
-                                        <input id="agreement" name="agreement" type="checkbox" /><a href="#" target="_blank">Sözleşme metnini</a> kabul ediyorum.
+                                        <input id="agreement" type="checkbox" /><a href="#" target="_blank">Sözleşme metnini</a> kabul ediyorum.
                                     </label>
                                 </div>
                             </div>
@@ -442,7 +494,6 @@
                             <div class="step-confirm-buttons">
                                 <div>
                                     <a href="javascript:void(0)" id="getPrice" class="btn btn-white btn-rounded finishBtn">Fiyat Al</a>
-                                    <span>veya tıkla "Enter"</span>
                                 </div>
                             </div>
                         </form>
@@ -451,7 +502,6 @@
                 <div class='button-container'>
                     <div>
                         <a href="javascript:void(0)" class="btn btn-white btn-rounded nextStep" tabindex="0">Sonraki Adım →</a>
-                        <span>veya tikla "Enter"</span>
                     </div>
                     <a href="javascript:void(0)" class='btn btn-white-transparent btn-rounded prevStep' tabindex="1">← Önceki Adım</a>
                 </div>
@@ -465,73 +515,214 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <h3 class="modal-title" id="staticBackdropLabel">Randevu Oluştur</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                ...
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group row get-offer-div align-items-center">
+                            <span class="col-12 col-sm-6 col-lg-6 col-form-label text-sm-right m-0">Nakliye Tutarı:</span>
+                            <div class="col-12 col-sm-6 col-lg-6 col-form-label">
+                                <span id="offer_price">0 ₺</span>
+                                <span id="offer_id" style="display:none"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="customer_name" class="col-12 col-sm-4 col-lg-4 col-form-label text-sm-right">Adınız</label>
+                            <div class="col-12 col-sm-6 col-lg-6">
+                                <input type="text" class="form-control" id="customer_name">
+                            </div>
+                            <div class='help-error' style="float:right"><i class="icon icon-warning"></i>Boş Geçilemez..</div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="customer_surname" class="col-12 col-sm-4 col-lg-4 col-form-label text-sm-right">Soyadınız</label>
+                            <div class="col-12 col-sm-6 col-lg-6">
+                                <input type="text" class="form-control" id="customer_surname">
+                            </div>
+                            <div class='help-error' style="float:right"><i class="icon icon-warning"></i>Boş Geçilemez..</div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="customer_phone" class="col-12 col-sm-4 col-lg-4 col-form-label text-sm-right">Telefon Numarası</label>
+                            <div class="col-12 col-sm-6 col-lg-6">
+                                <input type="text" im-insert="true" data-parsley-trigger="change" required autocomplete="off" class="form-control phone-inputmask" id="customer_phone" />
+                            </div>
+                            <div class='help-error' style="float:right"><i class="icon icon-warning"></i>Boş Geçilemez..</div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="customer_email" class="col-12 col-sm-4 col-lg-4 col-form-label text-sm-right">E-Mail Adresi</label>
+                            <div class="col-12 col-sm-6 col-lg-6">
+                                <input type="email" class="form-control" id="customer_email" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="transportDate" class="col-12 col-sm-4 col-lg-4 col-form-label text-sm-right">Ne zaman taşınmak istiyorsunuz?</label>
+                            <div class="col-12 col-sm-6 col-lg-6">
+                                <div class="input-group date">
+                                    <input type="text" id="transportDate" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                </div>
+                            </div>
+                            <div class='help-error' style="float:right"><i class="icon icon-warning"></i>Boş Geçilemez..</div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+            <div class="form-group row text-right">
+                <div class="col col-sm-10 col-lg-10 offset-sm-1 offset-lg-0">
+                    <button type="button" class="btn btn-space btn-success" id="BtnCreateReservation">Kaydet</button>
+                    <button type="button" class="btn btn-space btn-secondary" data-dismiss="modal">Kapat</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<!--Müşteri numarası MODAL-->
+<div class="modal fade" id="modalCustomerNumber" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="staticBackdropLabel">Telefon Numaranız</h3>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group row get-offer-div align-items-center">
+                            <span class="col-12 col-sm-12 col-lg-12 col-form-label text-sm-center m-0">Daha kaliteli hizmet için telefon numaranızı giriniz..</span>
+                        </div>
+                        <div class="form-group row">
+                            <label for="getCustomerNumber" class="col-12 col-sm-4 col-lg-4 col-form-label text-sm-right">Telefon Numarası</label>
+                            <div class="col-12 col-sm-6 col-lg-6">
+                                <input id="txtCustomerNumber" im-insert="true" type="text" data-parsley-trigger="change" required autocomplete="off" class="form-control phone-inputmask">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group row text-right">
+                <div class="col col-sm-10 col-lg-10 offset-sm-1 offset-lg-0">
+                    <button type="button" class="btn btn-space btn-success" id="BtnGetNumber">Devam Et</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts{
     <script>
+        $(document).ready(function () {
+            var customerPhone = "@cusPhone";
+            customerPhone = $.trim(customerPhone);
+
+            if (customerPhone != "")
+                $("#txtCustomerNumber").val(customerPhone);
+
+
+            $("#modalCustomerNumber").modal("show");
+        });
+        $("#BtnGetNumber").click(function () {
+            var customerNo = $("#txtCustomerNumber").val();
+            $.ajax({
+                url: '@Url.Action("CreateCustomer","Transport")',
+                type: 'post',
+                contentType: 'application/x-www-form-urlencoded',
+                data: { customerNo: customerNo },
+                beforeSend: function () {
+                    swal({
+                        title: null,
+                        text: "<img class='tuna_loading' src='images/loading.svg'/> Lütfen bekleyiniz...",
+                        html: true,
+                        showConfirmButton: false
+                    });
+                },
+                complete: function (result) {
+                    if (result.responseJSON.status == true) {
+                        swal({
+                            title: "",
+                            text: "Devam etmek için tıklayınız..",
+                            type: "success",
+                            confirmButtonText: "Devam"
+                        });
+                        $("#modalCustomerNumber").modal("hide");
+                    }
+                    else if (result.responseJSON.status == false) {
+                        swal({
+                            title: "Hata!",
+                            text: result.responseJSON.msg,
+                            type: "error",
+                            confirmButtonText: "Tamam"
+                        });
+                    }
+                }
+            });
+        });
         $(document).on('keyup', '#from_autocomp .bs-searchbox input', function (e) {
             var key = $(this).val();
             if (e.keyCode == 13) {
-
-                $("#from_auto_complete option").remove();
-                $.ajax({
-                    url: '@Url.Action("AutoCompleteAddress","Transport")',
-                    type: 'post',
-                    contentType: 'application/x-www-form-urlencoded',
-                    data: { valueKey: key },
-                    success: function (result) {
-                        if (result.districts != 'null') {
-                            $.each(result.districts, function (key, value) {
-                                $("#from_auto_complete")
-                                    .append($("<option>", {
-                                        value: value.geoObject.metaDataProperty.geocoderMetaData.text,
-                                        text: value.geoObject.metaDataProperty.geocoderMetaData.text
-                                    }))
-                                    .selectpicker('refresh');
-                            });
+                if (key.length > 2) {
+                    $("#from_auto_complete option").remove();
+                    $.ajax({
+                        url: '@Url.Action("AutoCompleteAddress","Transport")',
+                        type: 'post',
+                        contentType: 'application/x-www-form-urlencoded',
+                        data: { valueKey: key },
+                        beforeSend: function () {
+                            $("#from_loading").show();
+                        },
+                        complete: function () {
+                            $("#from_loading").hide();
+                        },
+                        success: function (result) {
+                            if (result.districts != 'null') {
+                                $.each(result.districts, function (key, value) {
+                                    $("#from_auto_complete")
+                                        .append($("<option>", {
+                                            value: value.geoObject.metaDataProperty.geocoderMetaData.text,
+                                            text: value.geoObject.metaDataProperty.geocoderMetaData.text
+                                        }))
+                                        .selectpicker('refresh');
+                                });
+                            }
                         }
-                    }
-                });
-                $('.selectpicker').selectpicker('refresh');
+                    });
+                    $('.selectpicker').selectpicker('refresh');
+                }
             }
         });
         $(document).on('keyup', '#to_autocomp .bs-searchbox input', function (e) {
             var key = $(this).val();
             if (e.keyCode == 13) {
-
+                if (key.length > 2) {
                 $("#to_auto_complete option").remove();
-                $.ajax({
-                    url: '@Url.Action("AutoCompleteAddress","Transport")',
-                    type: 'post',
-                    contentType: 'application/x-www-form-urlencoded',
-                    data: { valueKey: key },
-                    success: function (result) {
-                        if (result.districts != 'null') {
-                            $.each(result.districts, function (key, value) {
-                                $("#to_auto_complete")
-                                    .append($("<option>", {
-                                        value: value.geoObject.metaDataProperty.geocoderMetaData.text,
-                                        text: value.geoObject.metaDataProperty.geocoderMetaData.text
-                                    }))
-                                    .selectpicker('refresh');
-                            });
+                    $.ajax({
+                        url: '@Url.Action("AutoCompleteAddress","Transport")',
+                        type: 'post',
+                        contentType: 'application/x-www-form-urlencoded',
+                        data: { valueKey: key },
+                        beforeSend: function () {
+                            $("#to_loading").show();
+                        },
+                        complete: function () {
+                            $("#to_loading").hide();
+                        },
+                        success: function (result) {
+                            if (result.districts != 'null') {
+                                $.each(result.districts, function (key, value) {
+                                    $("#to_auto_complete")
+                                        .append($("<option>", {
+                                            value: value.geoObject.metaDataProperty.geocoderMetaData.text,
+                                            text: value.geoObject.metaDataProperty.geocoderMetaData.text
+                                        }))
+                                        .selectpicker('refresh');
+                                });
+                            }
                         }
-                    }
-                });
-                $('.selectpicker').selectpicker('refresh');
+                    });
+                    $('.selectpicker').selectpicker('refresh');
+                }
             }
         });
         $('.selectpicker').selectpicker({
@@ -539,8 +730,45 @@
             liveSearchPlaceholder: 'Enter tuşuna basarak arama yapınız..',
             noneResultsText: 'Hiç bir eşleşme yok',
         });
+        var date = new Date();
+        date.setDate(date.getDate() + 1);
+        $('.date').datepicker({
+            format: "dd.mm.yyyy",
+            todayBtn: "linked",
+            language: "tr",
+            todayHighlight: true,
+            startDate: date,
+            maxViewMode: 0
+        });
         $("#asd").click(function () {
-            //$('#step-info').text('Evinizin büyüklüğü bizim için önemli');
+        });
+        $("#deneme").click(function () {
+            var signupForm = $("#getOfferForm");
+
+            var roomCountInput = signupForm.find('select[name="roomCount"]');
+            console.log(roomCountInput.length);
+            console.log(roomCountInput.val());
+            console.log(roomCountInput);
+        });
+
+        $(function (e) {
+            "use strict";
+            $(".date-inputmask").inputmask("dd/mm/yyyy"),
+                $(".phone-inputmask").inputmask("(999) 999-9999"),
+                $(".email-inputmask").inputmask({
+                    mask: "*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@@*{1,20}[*{2,6}][*{1,2}].*{1,}[.*{2,6}][.*{1,2}]",
+                    greedy: !1,
+                    onBeforePaste: function (n, a) {
+                        return (e = e.toLowerCase()).replace("mailto:", "")
+                    },
+                    definitions: {
+                        "*": {
+                            validator: "[0-9A-Za-z!#$%&'*+/=?^_`{|}~/-]",
+                            cardinality: 1,
+                            casing: "lower"
+                        }
+                    }
+                })
         });
 
     </script>

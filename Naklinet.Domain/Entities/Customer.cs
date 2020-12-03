@@ -11,14 +11,14 @@ namespace Naklinet.Domain.Entities
     {
         [Key]
         public int ID { get; set; }
-        [Required, StringLength(30)]
+        [StringLength(30)]
         public string Name { get; set; }
-        [Required, StringLength(40)]
+        [StringLength(40)]
         public string Surname { get; set; }
         [Required, StringLength(14)]
         public string Phone { get; set; }
         public string Email { get; set; }
-
+        public int? LeftStep { get; set; }
 
         public virtual ICollection<Reservations> Reservations { get; set; } //1 müşterinin birden fazla rezervasyonu olabilir mi ??
         public virtual ICollection<Comments> Comments { get; set; }

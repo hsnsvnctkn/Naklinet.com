@@ -18,6 +18,10 @@ namespace Naklinet.Domain.Entities
         [Required]
         public double MontageFactor { get; set; }
         [Required]
-        public double WayDiff { get; set; }
+        public double WayFactor { get; set; }
+        [Required]
+        public double MobileElevatorFactor { get; set; }
+        [Required]
+        public double MobileElevatorIncrease { get; set; }
     }
 }

@@ -9,5 +9,7 @@ namespace Naklinet.Repository.Dto
     {
         public List<RoomCountDto> roomCounts { get; set; }
         public List<PackagingOptions> PackagingOptions { get; set; }
+        public List<MobileElevatorDto> mobileElevator { get; set; }
+        public List<StepExplanation> StepExplanations { get; set; }
     }
 }

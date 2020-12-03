@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Naklinet.Repository.Dto
+namespace Naklinet.Domain.Entities
 {
-    public class TransportInfo
+    [Table("OFFERS")]
+    public class Offers
     {
+        public int ID { get; set; }
         public string FromAddress { get; set; }
         public string ToAddress { get; set; }
         public int? FromRoomCountID { get; set; }
@@ -16,9 +19,10 @@ namespace Naklinet.Repository.Dto
         public int MobileElevatorID { get; set; }
         public int PackagingOptionID { get; set; }
         public bool Montage { get; set; }
-        public int? OfferID { get; set; }
+        public bool IsCompleted { get; set; }
+        public double OfferPrice { get; set; }
 
-        public DateTime TransportDate { get; set; }
+        public DateTime? TransportDate { get; set; }
 
         public string CustomerName { get; set; }
         public string CustomerSurname { get; set; }

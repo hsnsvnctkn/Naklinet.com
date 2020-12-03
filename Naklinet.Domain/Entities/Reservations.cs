@@ -18,11 +18,12 @@ namespace Naklinet.Domain.Entities
         [Required]
         public DateTime ReservationDate { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public DateTime TransportDate { get; set; }
+        public DateTime? TransportDate { get; set; }
         public bool Montage { get; set; }
         public int PackagingOptionID { get; set; }
         public int DriverID { get; set; }
         public int StatusID { get; set; }
+        public bool IsAccepted { get; set; }
 
 
 

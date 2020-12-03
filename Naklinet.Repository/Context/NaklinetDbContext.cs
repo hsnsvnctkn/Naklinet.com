@@ -30,6 +30,9 @@ namespace Naklinet.Repository.Context
         public DbSet<FromAddresses> FromAddresses { get; set; }
         public DbSet<PackagingOptions> PackagingOptions { get; set; }
         public DbSet<Factors> Factors { get; set; }
+        public DbSet<MobileElevator> MobileElevator { get; set; }
+        public DbSet<StepExplanation> StepExplanations { get; set; }
+        public DbSet<Offers> Offers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -219,8 +222,9 @@ namespace Naklinet.Repository.Context
 
             var roomCount = new List<RoomCount>
             {
-                new RoomCount{ ID = 1, BasePrice = 400, Count = "1+1" },
-                new RoomCount{ ID = 2, BasePrice = 500, Count = "2+1" }
+                new RoomCount{ ID = 5, Count = "1+0", I = 1 },
+                new RoomCount{ ID = 1, Count = "1+1", I = 2 },
+                new RoomCount{ ID = 2, Count = "2+1", I = 3 },
             };
             modelBuilder.Entity<RoomCount>().HasData(roomCount);
 
@@ -232,6 +236,15 @@ namespace Naklinet.Repository.Context
                 new ReservationStatus{ ID = 4, StatusName = "Tamamlandı" }
             };
             modelBuilder.Entity<ReservationStatus>().HasData(reservationStatus);
+
+            var mobileElevator = new List<MobileElevator>
+            {
+                new MobileElevator{ ID = 1, OpitonText = "Sadece Eski Evimde İstiyorum", Price = 200, Text = "from" },
+                new MobileElevator{ ID = 2, OpitonText = "Sadece Yeni Evimde İstiyorum", Price = 200, Text = "to" },
+                new MobileElevator{ ID = 3, OpitonText = "Her İki Evimde İstiyorum", Price = 400, Text = "both" },
+                new MobileElevator{ ID = 4, OpitonText = "Mobil Asansör İstemiyorum", Price = 0, Text = "no" },
+            };
+            modelBuilder.Entity<MobileElevator>().HasData(mobileElevator);
 
             var packagingOptions = new List<PackagingOptions>
             {
@@ -316,9 +329,12 @@ namespace Naklinet.Repository.Context
                 RoomCountFactor = 120,
                 FloorFactor = 100,
                 MontageFactor = 150,
-                WayDiff = 3
+                WayFactor = 3,
+                MobileElevatorFactor = 350,
+                MobileElevatorIncrease = 1.2
             };
             modelBuilder.Entity<Factors>().HasData(factor);
+
         }
     }
 }

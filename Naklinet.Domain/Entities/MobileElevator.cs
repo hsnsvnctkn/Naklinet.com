@@ -6,18 +6,16 @@ using System.Text;
 
 namespace Naklinet.Domain.Entities
 {
-    [Table("ROOMCOUNT")]
-    public class RoomCount
+    [Table("MOBILEELEVATOR")]
+    public class MobileElevator
     {
         [Key]
         public int ID { get; set; }
         [Required]
-        public string Count { get; set; }
+        public string OpitonText { get; set; }
         [Required]
-        public int I { get; set; }
-
-
-        public virtual ICollection<ToAddresses> ToAddresses { get; set; }
-        public virtual ICollection<FromAddresses> FromAddresses { get; set; }
+        public double Price { get; set; }
+        [Required]
+        public string Text { get; set; }
     }
 }

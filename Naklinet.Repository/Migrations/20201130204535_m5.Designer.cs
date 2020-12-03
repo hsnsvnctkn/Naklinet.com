@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Naklinet.Repository.Context;
 
 namespace Naklinet.Repository.Migrations
 {
     [DbContext(typeof(NaklinetDbContext))]
-    partial class NaklinetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201130204535_m5")]
+    partial class m5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -445,69 +447,6 @@ namespace Naklinet.Repository.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Naklinet.Domain.Entities.Offers", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CustomerEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomerPhone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomerSurname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FromAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("FromElevator")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("FromFloor")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FromRoomCountID")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("MobileElevatorID")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Montage")
-                        .HasColumnType("bit");
-
-                    b.Property<double>("OfferPrice")
-                        .HasColumnType("float");
-
-                    b.Property<int>("PackagingOptionID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ToAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("ToElevator")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("ToFloor")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("TransportDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("OFFERS");
-                });
-
             modelBuilder.Entity("Naklinet.Domain.Entities.PackagingOptions", b =>
                 {
                     b.Property<int>("ID")
@@ -657,9 +596,6 @@ namespace Naklinet.Repository.Migrations
                     b.Property<int>("DriverID")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsAccepted")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("Montage")
                         .HasColumnType("bit");
 
@@ -681,7 +617,7 @@ namespace Naklinet.Repository.Migrations
                     b.Property<int>("StatusID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("TransportDate")
+                    b.Property<DateTime>("TransportDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
@@ -705,7 +641,6 @@ namespace Naklinet.Repository.Migrations
                             CreatedDate = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerID = 1,
                             DriverID = 3,
-                            IsAccepted = false,
                             Montage = true,
                             PackagingOptionID = 1,
                             PriceToCustomer = 2200.0,
@@ -721,14 +656,14 @@ namespace Naklinet.Repository.Migrations
                             CreatedDate = new DateTime(2020, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerID = 2,
                             DriverID = 3,
-                            IsAccepted = false,
                             Montage = false,
                             PackagingOptionID = 1,
                             PriceToCustomer = 1700.0,
                             PriceToShipper = 1500.0,
                             ReservationDate = new DateTime(2020, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ShipperID = 1,
-                            StatusID = 4
+                            StatusID = 4,
+                            TransportDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -853,7 +788,7 @@ namespace Naklinet.Repository.Migrations
                         {
                             ID = 1,
                             Address = "Test Nakliyeci Adres 1",
-                            CreatedDate = new DateTime(2020, 12, 3, 23, 0, 59, 287, DateTimeKind.Local).AddTicks(2316),
+                            CreatedDate = new DateTime(2020, 11, 30, 23, 45, 34, 776, DateTimeKind.Local).AddTicks(9983),
                             FoundingDate = new DateTime(2011, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Test Nakliyeci Adı 1",
                             Phone = "05363403660",
@@ -865,7 +800,7 @@ namespace Naklinet.Repository.Migrations
                         {
                             ID = 2,
                             Address = "Test Nakliyeci Adres 2",
-                            CreatedDate = new DateTime(2020, 12, 3, 23, 0, 59, 287, DateTimeKind.Local).AddTicks(7481),
+                            CreatedDate = new DateTime(2020, 11, 30, 23, 45, 34, 777, DateTimeKind.Local).AddTicks(5209),
                             FoundingDate = new DateTime(2012, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Test Nakliyeci Adı 2",
                             Phone = "05322322525",

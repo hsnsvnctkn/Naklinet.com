@@ -10,6 +10,7 @@ namespace Naklinet.Repository.Dto
         public int ID { get; set; }
         public string Count { get; set; }
         public double BasePrice { get; set; }
+        public int I { get; set; }
 
 
         public virtual ICollection<ToAddresses> ToAddresses { get; set; }
